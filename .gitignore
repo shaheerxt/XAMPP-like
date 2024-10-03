@@ -1,0 +1,62 @@
+# Ignore local development files
+node_modules
+npm-debug.log
+yarn-error.log
+
+# Ignore local environment files
+.env
+*.env
+
+# Ignore build artifacts and temporary files
+*.log
+*.swp
+*.swo
+.DS_Store
+Thumbs.db
+
+# Ignore the MySQL data directory (it will be mounted as a volume)
+mysql_data
+
+# Ignore the src directory (it will be mounted as a volume)
+src
+
+# Ignore any local configuration files
+*.local.php
+*.local.yml
+
+# Ignore backup files
+*.bak
+*.backup
+*~
+
+# Ignore IDE-specific files
+.vscode
+.idea
+*.sublime-project
+*.sublime-workspace
+
+# Ignore test and documentation directories
+test
+tests
+docs
+documentation
+
+# Ignore any compiled binaries or packages
+*.com
+*.class
+*.dll
+*.exe
+*.o
+*.so
+*.pyc
+*.pyo
+*.pyd
+
+# Ignore logs and databases
+*.log
+*.sql
+*.sqlite
+
+# Ignore OS generated files
+ehthumbs.db
+Icon?
