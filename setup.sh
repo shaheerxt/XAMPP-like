@@ -71,6 +71,32 @@ set_phpmyadmin_image() {
     echo "Using phpMyAdmin image: $PHPMYADMIN_IMAGE"
 }
 
+# Function to set the appropriate images based on architecture
+set_images() {
+    local arch=$(uname -m)
+    case $arch in
+        x86_64|amd64)
+            export PHP_IMAGE="php:7.4-apache"
+            export MARIADB_IMAGE="mariadb:11.2"
+            export PHPMYADMIN_IMAGE="phpmyadmin/phpmyadmin"
+            ;;
+        aarch64|arm64)
+            export PHP_IMAGE="arm64v8/php:7.4-apache"
+            export MARIADB_IMAGE="arm64v8/mariadb:11.2"
+            export PHPMYADMIN_IMAGE="arm64v8/phpmyadmin:latest"
+            ;;
+        *)
+            echo "Unsupported architecture: $arch"
+            export PHP_IMAGE="php:7.4-apache"
+            export MARIADB_IMAGE="mariadb:11.2"
+            export PHPMYADMIN_IMAGE="phpmyadmin/phpmyadmin"
+            ;;
+    esac
+    echo "Using PHP image: $PHP_IMAGE"
+    echo "Using MariaDB image: $MARIADB_IMAGE"
+    echo "Using phpMyAdmin image: $PHPMYADMIN_IMAGE"
+}
+
 # Detect OS and architecture
 OS=$(detect_os)
 ARCH=$(detect_arch)
@@ -121,8 +147,8 @@ else
     echo "The 'src' directory already exists."
 fi
 
-# Set the appropriate phpMyAdmin image
-set_phpmyadmin_image
+# Set the appropriate images
+set_images
 
 # Start the Docker environment
 echo "Starting the Docker environment..."

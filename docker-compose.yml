@@ -2,7 +2,10 @@ version: '3'
 
 services:
   web:
-    build: .
+    build: 
+      context: .
+      args:
+        PHP_IMAGE: ${PHP_IMAGE:-php:7.4-apache}
     container_name: xampp_web
     volumes:
       - ./src:/var/www/html
@@ -15,7 +18,7 @@ services:
       - db
 
   db:
-    image: mariadb:11.2
+    image: ${MARIADB_IMAGE:-mariadb:11.2}
     container_name: xampp_mariadb
     environment:
       MYSQL_ROOT_PASSWORD: rootpassword

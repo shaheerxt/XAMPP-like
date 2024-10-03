@@ -1,4 +1,5 @@
-FROM php:7.4-apache
+ARG PHP_IMAGE=php:7.4-apache
+FROM ${PHP_IMAGE}
 
 # Use Apache 2.4.54
 RUN echo "deb http://deb.debian.org/debian bullseye main" > /etc/apt/sources.list.d/bullseye.list \
