@@ -1,5 +1,11 @@
 FROM php:7.4-apache
 
+# Use Apache 2.4.54
+RUN echo "deb http://deb.debian.org/debian bullseye main" > /etc/apt/sources.list.d/bullseye.list \
+    && apt-get update \
+    && apt-get install -y apache2=2.4.54-1~deb11u1 \
+    && rm /etc/apt/sources.list.d/bullseye.list
+
 # Install dependencies first
 RUN apt-get update && apt-get install -y \
     libfreetype6-dev \

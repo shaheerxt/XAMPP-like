@@ -53,6 +53,24 @@ install_docker_windows() {
     exit 1
 }
 
+# Function to set the appropriate phpMyAdmin image
+set_phpmyadmin_image() {
+    local arch=$(uname -m)
+    case $arch in
+        x86_64|amd64)
+            export PHPMYADMIN_IMAGE="phpmyadmin/phpmyadmin"
+            ;;
+        aarch64|arm64)
+            export PHPMYADMIN_IMAGE="arm64v8/phpmyadmin:latest"
+            ;;
+        *)
+            echo "Unsupported architecture: $arch"
+            export PHPMYADMIN_IMAGE="phpmyadmin/phpmyadmin"
+            ;;
+    esac
+    echo "Using phpMyAdmin image: $PHPMYADMIN_IMAGE"
+}
+
 # Detect OS and architecture
 OS=$(detect_os)
 ARCH=$(detect_arch)
@@ -102,6 +120,9 @@ if [ ! -d "src" ]; then
 else
     echo "The 'src' directory already exists."
 fi
+
+# Set the appropriate phpMyAdmin image
+set_phpmyadmin_image
 
 # Start the Docker environment
 echo "Starting the Docker environment..."

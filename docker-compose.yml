@@ -1,4 +1,4 @@
-version: '3.8'
+version: '3'
 
 services:
   web:
@@ -11,35 +11,36 @@ services:
       - "8080:80"
     networks:
       - xampp_network
+    depends_on:
+      - db
 
-  mariadb:
+  db:
     image: mariadb:11.2
     container_name: xampp_mariadb
     environment:
       MYSQL_ROOT_PASSWORD: rootpassword
-      MYSQL_DATABASE: my_database
+      MYSQL_DATABASE: myapp
       MYSQL_USER: user
-      MYSQL_PASSWORD: userpassword
+      MYSQL_PASSWORD: password
     volumes:
-      - mariadb_data:/var/lib/mysql
+      - ./mysql_data:/var/lib/mysql
     ports:
       - "3306:3306"
     networks:
       - xampp_network
 
   phpmyadmin:
-    image: phpmyadmin/phpmyadmin
+    image: ${PHPMYADMIN_IMAGE:-phpmyadmin/phpmyadmin}
     container_name: xampp_phpmyadmin
     environment:
-      PMA_HOST: mariadb
+      PMA_HOST: db
       MYSQL_ROOT_PASSWORD: rootpassword
     ports:
       - "8081:80"
     networks:
       - xampp_network
-
-volumes:
-  mariadb_data:
+    depends_on:
+      - db
 
 networks:
   xampp_network:
